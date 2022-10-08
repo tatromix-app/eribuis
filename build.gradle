@@ -1,9 +1,11 @@
 plugins {
     id 'idea'
-    id 'java'
+    id 'java-lybrary'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.9'
 }
+
+apply plugin : 'org.openjfx.javafxplugin'
 
 group 'com.github.tatromix-app'
 version '0.0.1'
