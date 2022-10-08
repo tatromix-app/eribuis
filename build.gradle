@@ -1,24 +1,58 @@
 plugins {
     id 'idea'
-    id 'java-lybrary'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.9'
 }
 
-apply plugin : 'org.openjfx.javafxplugin'
+apply plugin: 'org.openjfx.javafxplugin'
 
 group 'com.github.tatromix-app'
 version '0.0.1'
 
 repositories {
     mavenCentral()
+    maven {
+        url = 'https://jitpack.io/'
+        name = 'JitPack'
+    }
+    maven {
+        url 'https://litarvan.github.io/maven'
+    }
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'fr.litarvan:openauth:1+'
+    implementation 'de.jensd:fontawesomefx-fontawesome:4+'
+
+    implementation 'fr.flowarg:flowupdater:1.5+'
+    implementation 'fr.flowarg:openlauncherlib:3+'
+
+    implementation 'com.github.goxr3plus:FX-BorderlessScene:4+'
+    implementation 'com.github.oshi:oshi-core:5+'
 }
 
-test {
-    useJUnitPlatform()
+javafx {
+    version = 12
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing']
+}
+
+application {
+    getMainClass().set('com.github.tatromix-app.Main')
+}
+
+compileJava {
+    options.encoding = "UTF-8"
+}
+
+jar {
+    manifest {
+        attributes 'Main-class:' 'com.github.tatromix-app.Main'
+    }
+    from {
+        configurations.compireClassPath.collect {
+            it.IsDirectory() ? it : zipTree(it)
+        }
+    }
 }
